@@ -44,4 +44,11 @@ var getJSONData = function(url){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+  // Si no inició sesión, redirecciona al login.
+  if(!sessionStorage.getItem('user') && document.URL.slice(-10) != 'login.html')
+    window.location = 'login.html';
+
+  // Si inició sesión, y se encuentra en login, redirecciona a la página principal.
+  if(sessionStorage.getItem('user') && document.URL.slice(-10) == 'login.html')
+    window.location = 'index.html';
 });
