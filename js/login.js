@@ -9,6 +9,7 @@ document.getElementById("login").addEventListener("click", (e) => {
     var err = false;
     var user = document.getElementById("user").value;
     var password = document.getElementById("password").value;
+    var remember = document.getElementById("recordar").checked;
 
     // Caja de mensaje de error
     var msgBox = document.getElementById("msgBox");
@@ -53,6 +54,9 @@ document.getElementById("login").addEventListener("click", (e) => {
         setTimeout(() => {msgBox.style.display = "none"}, 3000);
     }else{
         //Se accede al inicio de sesión.
+        if(remember){
+            localStorage.setItem('user', user);
+        }
         sessionStorage.setItem('user', user);
     }
 });

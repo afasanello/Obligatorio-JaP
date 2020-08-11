@@ -44,6 +44,12 @@ var getJSONData = function(url){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+  // Chequea si está recordando usuario.
+  var remember = localStorage.getItem('user');
+  if(remember){
+    sessionStorage.setItem('user', remember);
+  }
+
   // Si no inició sesión, redirecciona al login.
   if(!sessionStorage.getItem('user') && document.URL.slice(-10) != 'login.html')
     window.location = 'login.html';
