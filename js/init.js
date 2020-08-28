@@ -57,4 +57,14 @@ document.addEventListener("DOMContentLoaded", function(e){
   // Si inició sesión, y se encuentra en login, redirecciona a la página principal.
   if(sessionStorage.getItem('user') && document.URL.slice(-10) == 'login.html')
     window.location = 'index.html';
+
+  // Muestra en la esquina superior derecha el usuario, si está definido.
+  if(sessionStorage.getItem('user')){
+    var nav = document.getElementsByTagName("nav")[0].children[0];
+    var userElement = document.createElement("a");
+    userElement.setAttribute("class", "py-2 d-none d-md-inline-block");
+    userElement.setAttribute("href", "#");
+    userElement.innerHTML = `¡Hola, ${sessionStorage.getItem("user")}!`;
+    nav.appendChild(userElement);
+  }
 });
