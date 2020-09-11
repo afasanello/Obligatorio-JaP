@@ -24,29 +24,44 @@
       </div>
     </nav>
     <div class="container p-5">
-      <div class="row my-4">
-        <div class="col-9">
-          <input type="search" id="search" class="form-control" placeholder="Busca por nombre o descripción" onkeyup="filterProducts()" />
+      <div class="row">
+        <div class="col text-right">
+            <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+                <label class="btn btn-light active" id="sortAsc" onclick="filterProducts()">
+                    <input type="radio" name="options" autocomplete="off" checked>$↑
+                </label>
+                <label class="btn btn-light" id="sortDesc" onclick="filterProducts()">
+                    <input type="radio" name="options" autocomplete="off">$↓
+                </label>
+                <label class="btn btn-light" id="sortByCount" onclick="filterProducts()">
+                    <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
+                </label>
+            </div>
         </div>
       </div>
-      <div class="row my-4">
-        <div class="col-2">
-          <input type="text" id="pMin" class="form-control" placeholder="Precio mínimo" onkeyup="filterProducts()" />
+      <div class="row justify-content-end">
+        <div class="col-md-6">
+          <input type="search" id="search" class="form-control" placeholder="Busca por nombre o descripción" onkeyup="filterProducts()" />
         </div>
-        <div class="col-2">
-          <input type="text" id="pMax" class="form-control" placeholder="Precio máximo" onkeyup="filterProducts()" />
-        </div>
-        <div class="col-2">
-          <button type="reset" class="btn btn-danger col-12" onclick="resetValues()">Reiniciar valores</button>
-        </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-info col-12" id="costBtn" onclick="orderByCost()">Ordenar por precio</button>
-          <input type="hidden" id="cost">
-        </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-info col-12" id="relevanceBtn" onclick="orderByRelevance()">Ordenar por relevancia</button>
-          <input type="hidden" id="relevance">
-        </div>
+          <div class="col-md-6 col-sm-12 mb-1 container">
+            <div class="row container p-0 m-0">
+              <div class="col">
+                <p class="font-weight-normal text-right my-2">Precio</p>
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" placeholder="min." id="pMin" onkeyup="filterProducts()">
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" placeholder="máx." id="pMax" onkeyup="filterProducts()">
+              </div>
+              <div class="col-3 p-0">
+                <div class="btn-group" role="group">
+                  <button class="btn btn-light btn-block" id="rangeFilterCount" onclick="filterProducts()">Filtrar</button>
+                  <button class="btn btn-link btn-sm" id="clearRangeFilter" onclick="resetValues()">Limpiar</button>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
       <div class="row">
         <table>

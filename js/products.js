@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             var content = ``;
             for(var i = 0; i < prod.length; i++){
                 content += `
-                    <tr>
+                    <tr onclick="window.location = 'product-info.html?prod=${prod[i].name}'">
                         <td>
                             <img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}">
                         </td>
@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
 function filterProducts(){
     var min = document.getElementById("pMin").value;
     var max = document.getElementById("pMax").value;
-    var cost = document.getElementById("cost").value;
-    var relevance = document.getElementById("relevance").value;
     var search = document.getElementById("search").value;
 
     getJSONData(PRODUCTS_URL)
@@ -47,24 +45,25 @@ function filterProducts(){
             // de filtro.
             var filter;
 
-            if(cost == "asc")
+            if(document.getElementsByName("options")[0].checked){
                 // Ordena de forma ascendente
                 prod.sort(function(a, b){
                     return a.cost - b.cost;
                 });
-            else if(cost == "desc")
+            }
+            else if(document.getElementsByName("options")[1].checked){
                 // Ordena de forma descendente
                 prod.sort(function(a, b){
                     return b.cost - a.cost;
                 });
-
-            if(relevance)
+            }
+            if(document.getElementsByName("options")[2].checked){
                 prod.sort(function(a, b){
                     // Ordena descendentemente por cantidad de vendidos.
                     return b.soldCount - a.soldCount;
                 });
-
-            if(search != "")
+            }
+            if(search != ""){
                 // Filtra por búsqueda, ya sea por nombre o por descripción, sin importar
                 // si se escribe en mayúsculas o minúsculas.
                 prod = prod.filter(a => {
@@ -75,7 +74,7 @@ function filterProducts(){
 
                     return desc.indexOf(s) != -1 || name.indexOf(s) != -1;
                 });
-
+            }
             for(var i = 0; i < prod.length; i++){
                 filter = true;
 
@@ -140,43 +139,14 @@ function filterProducts(){
     });
 }
 
-// Ordena por costo. Define los parámetros para que se ejecute en la función principal.
-function orderByCost(){
-    document.getElementById("relevance").value = "";
-    document.getElementById("relevanceBtn").innerHTML = "Ordenar por relevancia";
-
-    if(document.getElementById("cost").value == "asc"){
-        document.getElementById("cost").value = "desc";
-        document.getElementById("costBtn").innerHTML = "Ordenar por precio ↓";
-    }else{
-        document.getElementById("cost").value = "asc";
-        document.getElementById("costBtn").innerHTML = "Ordenar por precio ↑";
-    }
-    
-    filterProducts();
-}
-
-// Ordena por relevancia. Define los parámetros para que se ejecute en la función principal.
-function orderByRelevance(){
-    document.getElementById("cost").value = "";
-    document.getElementById("relevance").value = "desc";
-    
-    document.getElementById("costBtn").innerHTML = "Ordenar por precio";
-    document.getElementById("relevanceBtn").innerHTML = "Ordenar por relevancia ↑";
-
-    filterProducts();
-}
-
 // Reinicia los valores del formulario, y muestra todos los productos sin criterios de búsqueda.
 function resetValues(){
     document.getElementById("pMin").value = "";
     document.getElementById("pMax").value = "";
-    document.getElementById("cost").value = "";
-    document.getElementById("relevance").value = "";
     document.getElementById("search").value = "";
-    
-    document.getElementById("costBtn").innerHTML = "Ordenar por precio";
-    document.getElementById("relevanceBtn").innerHTML = "Ordenar por relevancia";
+    document.getElementsByName("options")[0].checked = false;
+    document.getElementsByName("options")[1].checked = false;
+    document.getElementsByName("options")[2].checked = false;
 
     filterProducts();
 }

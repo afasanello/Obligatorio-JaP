@@ -13,6 +13,17 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+
+  <style>
+    .checked {
+      color: orange;
+    }
+
+    .comment {
+      height: 400px;
+      overflow-y: scroll;
+    }
+  </style>
 </head>
 
 <body>
@@ -26,12 +37,58 @@
     </div>
   </nav>
   <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 13/09/2020) y Entrega 4 (Fecha de entrega: 20/09/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+    <div class="row my-2">
+      <div class="col" id="product">
+
+      </div>
     </div>
+    <div class="row my-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            Comentarios
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <form id="sendComment">
+                  <div class="form-group">
+                    <textarea id="comment" placeholder="Comentario" class="form-control" maxlength="200" rows="3"></textarea>
+                  </div>
+                  <div id="commentErr" class="alert-danger" style="display: none"></div>
+                  Quedan <span id="length">200</span> caracteres.<br /><br />
+
+                  Puntuación:
+                  <div class="form-group">
+                    <span class="fa fa-star" id="star1" onclick="rate(1)"></span>
+                    <span class="fa fa-star" id="star2" onclick="rate(2)"></span>
+                    <span class="fa fa-star" id="star3" onclick="rate(3)"></span>
+                    <span class="fa fa-star" id="star4" onclick="rate(4)"></span>
+                    <span class="fa fa-star" id="star5" onclick="rate(5)"></span>
+                    <input type="hidden" id="rate">
+                  </div>
+                  <div id="starErr" class="alert-danger" style="display: none"></div>
+                  <button type="button" id="send" class="btn btn-dark my-2" onclick="sendComment()">Enviar</button>
+                  <div id="succ" class="alert-success" style="display: none"></div>
+                </form>
+              </div>
+              <div class="col-6 comment" id="comments">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
+        <h4 class="alert-heading">¡A trabajar! :)</h4>
+        <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 13/09/2020) y Entrega 4 (Fecha de entrega: 20/09/2020).</p>
+        <hr>
+        <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+      </div>
+    -->
   </div>
   <footer class="text-muted">
     <div class="container">
