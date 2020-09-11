@@ -219,6 +219,7 @@ function sendComment(){
         for(var i = 1; i <= 5; i++){
             document.getElementById("star" + i).className = "fa fa-star";
         }
+        document.getElementById("length").innerHTML = "200";
     }
 }
 
