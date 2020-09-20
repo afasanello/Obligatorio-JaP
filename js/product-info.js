@@ -61,18 +61,64 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             // Contenido
             product += `
-                <div class="col-7">
-                    <div class="card">
-                        <div class="card-header">
-                            ${info.category} / ${info.name}
-                        </div>
-                        <div class="card-body">
-                            <p align="justify">${info.description}</p>
+                        <div class="col-7">
+                            <div class="card">
+                                <div class="card-header">
+                                    ${info.category} / ${info.name}
+                                </div>
+                                <div class="card-body">
+                                    <p align="justify">${info.description}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>`;
+                </div>
+            `;
+
+            // Productos relacionados
+            product += `
+                <div class="row my-2">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">
+                                Productos relacionados
+                            </div>
+                            <div class="card-body">
+                               <div class="row" id="related">
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
 
             document.getElementById("product").innerHTML = product;
+
+            getJSONData(PRODUCTS_URL)
+            .then((res) => {
+                if(res.status == "ok"){
+                    var rel = res.data;
+                    var divRel = document.getElementById("related");
+                    for(var i = 0; i < info.relatedProducts.length; i++){
+                        divRel.innerHTML += `
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        ${rel[info.relatedProducts[i]].name}
+                                    </div>
+                                    <div class="card-body" onclick="window.location = 'product-info.html?prod=${info.relatedProducts[i]}'">
+                                        <img src="${rel[info.relatedProducts[i]].imgSrc}" class="col-12"><br />
+                                        <div class="col text-center">
+                                            <h3><span class="badge badge-dark">${rel[info.relatedProducts[i]].currency} ${rel[info.relatedProducts[i]].cost}</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                }
+            });
         }
     });
 

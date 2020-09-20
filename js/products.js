@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 content += `
                     <tr onclick="window.location = 'product-info.html?prod=${prod[i].name}'">
                         <td>
-                            <img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}">
+                          <a href="product-info.html?prod=${i}" class="prod"><img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}"></a>
                         </td>
                         <td style="padding: 20px;">
-                            <h4>${prod[i].name} <span class="badge badge-info">${prod[i].currency} ${prod[i].cost}</span></h4>
-                            <p>${prod[i].description}</p> 
+                            <a href="product-info.html?prod=${i}" class="prod"><h4>${prod[i].name} <span class="badge badge-info">${prod[i].currency} ${prod[i].cost}</span></h4>
+                            <p>${prod[i].description}</p></a>
                         </td>
                         <td>
                             <h4><span class="badge badge-info">Se vendieron ${prod[i].soldCount} unidades</span></h4>

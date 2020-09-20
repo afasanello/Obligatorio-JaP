@@ -61,10 +61,25 @@ document.addEventListener("DOMContentLoaded", function(e){
   // Muestra en la esquina superior derecha el usuario, si está definido.
   if(sessionStorage.getItem('user')){
     var nav = document.getElementsByTagName("nav")[0].children[0];
-    var userElement = document.createElement("a");
-    userElement.setAttribute("class", "py-2 d-none d-md-inline-block");
-    userElement.setAttribute("href", "#");
-    userElement.innerHTML = `¡Hola, ${sessionStorage.getItem("user")}!`;
-    nav.appendChild(userElement);
+
+    nav.innerHTML += `
+    <div class="dropdown">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        ${sessionStorage.getItem("user")}
+      </a>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+        <a class="dropdown-item" href="cart.html">Ver carrito</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" onclick="logout()">Cerrar sesión</a>
+      </div>
+    `;
   }
 });
+
+function logout(){
+  sessionStorage.removeItem('user');
+  localStorage.removeItem('user');
+  window.location = 'login.html';
+}
