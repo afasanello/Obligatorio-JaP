@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             var content = ``;
             for(var i = 0; i < prod.length; i++){
                 content += `
-                    <tr onclick="window.location = 'product-info.html?prod=${prod[i].name}'">
+                    <tr onclick="window.location = 'product-info.html?prod=${i}'">
                         <td>
                           <a href="product-info.html?prod=${i}" class="prod"><img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}"></a>
                         </td>
