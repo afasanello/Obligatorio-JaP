@@ -26,22 +26,30 @@ document.addEventListener("DOMContentLoaded", function(e){
     }else{
         showProducts();
     }
+
+    loadAddress();
 });
 
 // Mostrar productos en pantalla
 function showProducts(){
     var localInfo = localStorage.getItem("cart");
-    localInfo = JSON.parse(localInfo);
-    cart = "";
-
-    // Para cada iteración utiliza un molde para agregar los productos.
-    for(var i = 0; i < localInfo.articles.length; i++){
-        cart += showElem(localInfo.articles[i], i);
+    var cart = "";
+    if(localInfo){
+        localInfo = JSON.parse(localInfo);
+        
+        // Para cada iteración utiliza un molde para agregar los productos.
+        for(var i = 0; i < localInfo.articles.length; i++){
+            cart += showElem(localInfo.articles[i], i);
+        }
     }
 
+    
+
     // Si el carrito no es vacío, muestra los productos. De lo contrario, muestra una alerta.
-    if(cart != "") document.getElementById("cart").innerHTML = cart;
-    else{
+    if(cart != ""){
+        document.getElementById("cart").innerHTML = cart;
+        document.getElementById("send").disabled = false;
+    }else{
         document.getElementById("cart").innerHTML = `
         <div class="row">
             <div class="col-12">
@@ -51,6 +59,7 @@ function showProducts(){
                 </div>
             </div>
         </div>`;
+        document.getElementById("send").disabled = true;
     }
 
     // Refresca el monto total del carrito.
@@ -120,7 +129,7 @@ function addProd(obj){
     localStorage.setItem("cart", cart);
 }
 
-// Elimina el producto del carrito. Recibe como parámetro la posición del objeto .
+// Elimina el producto del carrito. Recibe como parámetro la posición del objeto.
 function deleteProd(item){
     var cart = localStorage.getItem("cart");
     cart = JSON.parse(cart);
@@ -131,6 +140,12 @@ function deleteProd(item){
     localStorage.setItem("cart", cart);
 
     // Actualiza la lista de productos.
+    showProducts();
+}
+
+// Vacía el carrito, destruyendo la lista de objetos del carrito en el localstorage.
+function emptyCart(){
+    localStorage.removeItem("cart");
     showProducts();
 }
 
@@ -205,7 +220,7 @@ function refreshAmount(){
         var ship = document.getElementsByName("shipping");
         if(ship[0].checked) tot *= 1.15;
         else if(ship[1].checked) tot *= 1.07;
-        else tot *= 1.05;
+        else if(ship[2].checked) tot *= 1.05;
 
         // Redondea la cantidad
         tot = Math.round(tot * 100) / 100;
@@ -215,5 +230,131 @@ function refreshAmount(){
         st.innerHTML += "0";
         t.innerHTML += "0";
     }
+}
 
+// Función que valida si los campos del formulario están completos.
+function validateForm(){
+    var addr = validateAddress();
+    var ship = validateShipping();
+    var paym = validatePayment();
+
+    if(addr && ship && paym){
+        saveAddress();
+
+        document.getElementById("succ").style.display = "block";
+        document.getElementById("send").disabled = true;
+        setTimeout(() => {
+            document.getElementById("succ").style.display = "none";
+            document.getElementById("send").disabled = false;
+            emptyCart();
+        }, 3000)
+    }
+}
+
+// Función que valida el envío
+function validateShipping(){
+    var typeShipping = document.getElementsByName("shipping");
+    var formValid = false;
+
+    var i = 0;
+    while (!formValid && i < typeShipping.length){
+        if (typeShipping[i].checked) formValid = true;
+        i++;
+    }
+
+    if (!formValid){
+        document.getElementById("error").style.display = "block";
+        document.getElementById("error").innerHTML = "Debe seleccionar tipo de envío";
+        return false;
+    }else{
+        document.getElementById("error").style.display = "none";
+        document.getElementById("error").innerHTML = "";
+        return true;
+    }
+}
+
+// Función que valida la dirección
+function validateAddress(){
+    var addrElem = document.getElementsByClassName("req");
+    var formValid = true;
+
+    for(var i = 0; i < addrElem.length; i++){
+        formValid = formValid && addrElem[i].value != "";
+    }
+
+    if(formValid == false){
+        document.getElementById("error2").style.display = "block";
+        document.getElementById("error2").innerHTML = "Falta llenar los campos";
+        return false;
+    }else{
+        document.getElementById("error2").style.display = "none";
+        document.getElementById("error2").innerHTML = "";
+        return true;
+    }
+}
+
+// Función que valida la forma de pago
+function validatePayment(){
+    var formValid = true;
+    if(document.getElementsByName("payment")[0].checked){
+        var paymentElem = document.getElementsByClassName("reqC");
+        for(var i = 0; i < paymentElem.length; i++){
+            formValid = formValid && paymentElem[i].value != "";
+        }
+
+        if(!formValid){
+            document.getElementById("error3").style.display = "block";
+            document.getElementById("error3").innerHTML = "Complete los datos de la tarjeta.";
+            return false;
+        }else{
+            document.getElementById("error3").style.display = "none";
+            document.getElementById("error3").innerHTML = "";
+            return true;
+        }
+    }else if(document.getElementsByName("payment")[1].checked){
+        var paymentElem = document.getElementsByClassName("reqB");
+        for(var i = 0; i < paymentElem.length; i++){
+            formValid = formValid && paymentElem[i].value != "";
+        }
+
+        if(!formValid){
+            document.getElementById("error3").style.display = "block";
+            document.getElementById("error3").innerHTML = "Complete los datos de la cuenta bancaria.";
+            return false;
+        }else{
+            document.getElementById("error3").style.display = "none";
+            document.getElementById("error3").innerHTML = "";
+            return true;
+        }
+    }else{
+        document.getElementById("error3").style.display = "block";
+        document.getElementById("error3").innerHTML = "Seleccione un método de pago.";
+        return false;
+    }
+}
+
+// Función que guarda el domicilio en local.
+function saveAddress(){
+    var addr = {};
+    addr.street = document.getElementById("street").value;
+    addr.number = document.getElementById("number").value;
+    addr.corner = document.getElementById("corner").value;
+    addr.city = document.getElementById("city").value;
+    addr.tel = document.getElementById("tel").value;
+    addr.country = document.getElementById("country").value;
+    addr = JSON.stringify(addr);
+    localStorage.setItem("addr", addr);
+}
+
+// Función que carga el domicilio si fue previamente guardado.
+function loadAddress(){
+    if(localStorage.getItem("addr")){
+        var addr = JSON.parse(localStorage.getItem("addr"));
+        document.getElementById("street").value = addr.street;
+        document.getElementById("number").value = addr.number;
+        document.getElementById("corner").value = addr.corner;
+        document.getElementById("city").value = addr.city;
+        document.getElementById("tel").value = addr.tel;
+        document.getElementById("country").value = addr.country;
+    }
 }
