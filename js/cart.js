@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     // Se asume que el cliente seleccionó dos productos, y tiene la posibilidad de
     // borrar los productos sin que vuelvan a aparecer.
     // En cualquier caso, muestra los productos.
-    if(!localStorage.getItem("cart")){
+    if(!localStorage.getItem("cart") || (localStorage.getItem("cart") == '{"articles":[]}')){
         getJSONData(CART_INFO_URL_DES)
         .then((res) => {
             if(res.status == "ok"){
