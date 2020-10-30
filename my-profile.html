@@ -43,12 +43,72 @@
     </div>
   </nav>
   <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 7 (Fecha de entrega: 8/11/202020) -> Punto 1 y 2.</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+    <div class="row">
+      <div class="col-9 mx-auto p-5 border border-secondary rounded bg-light">
+        <h1>Datos personales</h1>
+        <form enctype="multipart/form-data" method="post">
+          <div class="row">
+            <div class="col-4 p-1">
+              <label for="firstName">Nombre *</label>
+              <input type="text" class="form form-control" maxlength="40" name="firstName" id="firstName" placeholder="Nombre" required>
+              <div class="msgBox"></div>
+            </div>
+            <div class="col-4 p-1">
+              <label for="lastName">Apellido *</label>
+              <input type="text" class="form form-control" maxlength="40" name="lastName" id="lastName" placeholder="Apellido" required>
+              <div class="msgBox"></div>
+            </div>
+            <div class="col-4 p-1">
+              <label for="age">Edad *</label>
+              <input type="number" class="form form-control" min="1" name="age" id="age" placeholder="Edad" required>
+              <div class="msgBox"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8 p-1">
+              <label for="email">Correo electrónico *</label>
+              <input type="email" class="form form-control" name="email" id="email" placeholder="Correo electrónico" required>
+              <div class="msgBox"></div>
+            </div>
+            <div class="col-4 p-1">
+              <label for="tel">Teléfono *</label>
+              <input type="text" class="form form-control" name="tel" id="tel" placeholder="Teléfono" required>
+              <div class="msgBox"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col p-1">
+              <label for="pfp">Imagen de perfil</label>
+              <input type="file" class="form form-control" name="pfp" id="pfp" onchange="loadFile()" accept="image/*">
+              <div class="row my-2">
+                <div class="col-6 mx-auto">
+                  <img src="about:blank" id="img" width="100%" style="display: none" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9 mx-auto p-1">
+              <div class="msgBox"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 mx-auto p-1">
+              <button type="button" class="btn btn-info col-4 mx-3" onclick="sendForm();">Guardar cambios</button>
+              <button type="button" class="btn btn-secondary col-4 mx-3" onclick="loadData();">Reiniciar campos</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+    <!--
+      <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
+        <h4 class="alert-heading">¡A trabajar! :)</h4>
+        <p>Esta sección corresponde a: Entrega 7 (Fecha de entrega: 8/11/202020) -> Punto 1 y 2.</p>
+        <hr>
+        <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+      </div>
+    -->
   </div>
   <footer class="text-muted bg-light">
     <div class="container">

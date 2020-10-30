@@ -54,16 +54,16 @@
         </div>
           <div class="col-md-6 col-sm-12 mb-1 container">
             <div class="row container p-0 m-0">
-              <div class="col">
+              <div class="col-md-3 col-sm-3">
                 <p class="font-weight-normal text-right my-2">Precio</p>
               </div>
-              <div class="col">
+              <div class="col-md-3 col-sm-3">
                 <input class="form-control" type="number" placeholder="min." id="pMin" onkeyup="filterProducts()">
               </div>
-              <div class="col">
+              <div class="col-md-3 col-sm-3">
                 <input class="form-control" type="number" placeholder="máx." id="pMax" onkeyup="filterProducts()">
               </div>
-              <div class="col-3 p-0">
+              <div class="col-md-3 col-sm-3 p-0">
                 <div class="btn-group" role="group">
                   <button class="btn btn-light btn-block" id="rangeFilterCount" onclick="filterProducts()">Filtrar</button>
                   <button class="btn btn-link btn-sm" id="clearRangeFilter" onclick="resetValues()">Limpiar</button>
@@ -73,11 +73,8 @@
           </div>
       </div>
       <div class="row">
-        <table>
-          <tbody id="prods">
-            
-          </tbody>
-        </table>
+        <div id="prods" class="col card-deck">
+        </div>
       </div>
       <!--
         <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">

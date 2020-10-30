@@ -10,18 +10,22 @@ document.addEventListener("DOMContentLoaded", function (e) {
             var content = ``;
             for(var i = 0; i < prod.length; i++){
                 content += `
-                    <tr onclick="window.location = 'product-info.html?prod=${i}'">
-                        <td>
-                          <a href="product-info.html?prod=${i}" class="prod"><img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}"></a>
-                        </td>
-                        <td style="padding: 20px;">
-                            <a href="product-info.html?prod=${i}" class="prod"><h4>${prod[i].name} <span class="badge badge-info">${prod[i].currency} ${prod[i].cost}</span></h4>
-                            <p>${prod[i].description}</p></a>
-                        </td>
-                        <td>
-                            <h4><span class="badge badge-info">Se vendieron ${prod[i].soldCount} unidades</span></h4>
-                        </td>
-                    </tr>`;
+                    <div class="col col-md-4 my-3">
+                        <div class="card h-100">
+                            <div class="card-header text-right">
+                                ${prod[i].soldCount} vendidos
+                            </div>
+                            <div class="card-body">
+                                <a href="product-info.html?prod=${i}" class="prod"><img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}"></a>
+                                <h2>${prod[i].name}</h2>
+                                <p align="justify">${prod[i].description}</p>
+                            </div>
+                            <div class="card-footer">
+                                ${prod[i].currency} ${prod[i].cost} - <a href="product-info.html?prod=${i}">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
             list.innerHTML = content;
         }
@@ -119,18 +123,21 @@ function filterProducts(){
 
                     }
                     content += `
-                        <tr>
-                            <td>
-                                <img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}">
-                            </td>
-                            <td style="padding: 20px;">
-                                <h4>${name} <span class="badge badge-info">${prod[i].currency} ${prod[i].cost}</span></h4>
-                                <p>${desc}</p> 
-                            </td>
-                            <td>
-                                <h4><span class="badge badge-info">Se vendieron ${prod[i].soldCount} unidades</span></h4>
-                            </td>
-                        </tr>`;
+                        <div class="col col-md-4 my-3">
+                            <div class="card h-100">
+                                <div class="card-header text-right">
+                                    ${prod[i].soldCount} vendidos
+                                </div>
+                                <div class="card-body">
+                                    <a href="product-info.html?prod=${i}" class="prod"><img class="img-thumbnail" src="${prod[i].imgSrc}" width="300" alt="${prod[i].description}"></a>
+                                    <h2>${name}</h2>
+                                    <p align="justify">${desc}</p>
+                                </div>
+                                <div class="card-footer">
+                                    ${prod[i].currency} ${prod[i].cost} - <a href="product-info.html?prod=${i}">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>`;
                 }
 
             }
