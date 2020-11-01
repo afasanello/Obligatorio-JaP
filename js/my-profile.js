@@ -50,7 +50,7 @@ function saveData(){
     if(document.getElementById("pfp").files.length != 0){
         showSpinner();
         var file = document.getElementById("pfp");
-        var apiURL = "https://api.imgbb.com/1/upload?expiration=2678400&name=" + localStorage.getItem("user") + "&key=ca9e5c25334591ff9aa3f8d4510c6f0e";
+        var apiURL = "https://api.imgbb.com/1/upload?expiration=2678400&name=" + sessionStorage.getItem("user") + "&key=ca9e5c25334591ff9aa3f8d4510c6f0e";
         var formData = new FormData();
         formData.append("image", file.files[0])
         
